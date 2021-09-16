@@ -1,6 +1,7 @@
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import Image from "next/image";
 import contentful from "../../contentful";
+import Skeleton from "../../components/Skeleton";
 
 const client = contentful.getClient();
 
@@ -17,7 +18,7 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: false,
+    fallback: true,
   };
 }
 
@@ -36,6 +37,10 @@ export async function getStaticProps({ params }) {
 }
 
 export default function RecipeDetails({ recipe }) {
+  if (!recipe) {
+    return <Skeleton />;
+  }
+
   const { title, cookingTime, ingredients, method } = recipe.fields;
 
   const {
