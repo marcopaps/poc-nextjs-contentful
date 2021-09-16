@@ -2,24 +2,20 @@ import Link from "next/link";
 import Image from "next/image";
 
 const RecipeCard = ({ recipe }) => {
+  const { title, slug, cookingTime, thumbnail } = recipe.fields;
+
   const {
-    title,
-    slug,
-    cookingTime,
-    thumbnail: {
-      fields: {
-        file: {
-          details: { image },
-          url: imageUrl,
-        },
-      },
+    file: {
+      details: { image },
+      url: thumbnailUrl,
     },
-  } = recipe.fields;
+  } = thumbnail.fields;
+
   return (
     <div className="card">
       <div className="featured">
         <Image
-          src={`https:${imageUrl}`}
+          src={`https:${thumbnailUrl}`}
           width={image.width}
           height={image.height}
           alt={""}
@@ -36,6 +32,42 @@ const RecipeCard = ({ recipe }) => {
           </Link>
         </div>
       </div>
+
+      <style jsx>{`
+        .card {
+          transform: rotateZ(-1deg);
+        }
+        .content {
+          background: #fff;
+          box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1);
+          margin: 0;
+          position: relative;
+          top: -40px;
+          left: -10px;
+        }
+        .info {
+          padding: 16px;
+        }
+        .info h4 {
+          margin: 4px 0;
+          text-transform: uppercase;
+        }
+        .info p {
+          margin: 0;
+          color: #777;
+        }
+        .actions {
+          margin-top: 20px;
+          display: flex;
+          justify-content: flex-end;
+        }
+        .actions a {
+          color: #fff;
+          background: #f01b29;
+          padding: 16px 24px;
+          text-decoration: none;
+        }
+      `}</style>
     </div>
   );
 };
