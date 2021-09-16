@@ -10,15 +10,6 @@ export async function getStaticPaths() {
     content_type: "recipe",
   });
 
-  if (!items.length) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
-
   const paths = items.map((item) => {
     return {
       params: { slug: item.fields.slug },
@@ -36,6 +27,15 @@ export async function getStaticProps({ params }) {
     content_type: "recipe",
     "fields.slug": params.slug,
   });
+
+  if (!items.length) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
 
   const [recipe] = items;
 
